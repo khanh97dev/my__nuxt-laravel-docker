@@ -47,8 +47,8 @@ logs-client:
 lc: logs-client
 
 # Build and up docker containers
-build:
-	docker-compose build --build-arg UID=$(UID) --build-arg GID=$(GID)
+# build:
+# 	docker-compose build --build-arg UID=$(UID) --build-arg GID=$(GID)
 
 # Build containers with no cache option
 build-no-cache:
@@ -253,13 +253,11 @@ git-export:
 # Laravel
 install-laravel:
 	docker-compose down
-	sudo rm -rf api
 	mkdir api
 	docker-compose up -d
 	docker-compose exec php composer create-project --prefer-dist laravel/laravel .
 	sudo chmod -R 777 api/bootstrap/cache
 	sudo chmod -R 777 api/storage
-	sudo rm api/.env
 	cp .env.api api/.env
 	docker-compose exec php php artisan key:generate --ansi
 	docker-compose exec php php artisan --version
@@ -267,13 +265,12 @@ install-laravel:
 # Nuxt
 install-nuxt:
 	docker-compose down
-	sudo rm -rf client
-	docker-compose run client yarn create nuxt-app ../client
+	docker-compose run client npm install ../client -no-bin-links
 	sudo chown -R ${UID}:${GID} client
 	cp .env.client client/.env
 	sed -i "1i require('dotenv').config()" client/nuxt.config.js
 	docker-compose up -d
-	docker-compose exec client yarn info nuxt version
+	docker-compose exec client npm view nuxt version
 
 
 #-----------------------------------------------------------

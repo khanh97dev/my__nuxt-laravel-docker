@@ -45,9 +45,9 @@ Well tested on Ubuntu 18.04, 19.10 and 20.04.
 ## About the structure
 Laravel API and Nuxt are totally separate from each other and there are some reasons why I don't mix them up.
 - First, throwing two frameworks together is a guaranteed mess in the future.
-- API should be the only one layer of coupling. 
+- API should be the only one layer of coupling.
 - You can host them on the different servers.
-- You can even split them into separate repositories if (when) the project will grow.  
+- You can even split them into separate repositories if (when) the project will grow.
 - You can even add a third project, for example, a mobile APP, which will use the same API also.
 
 ## Installation
@@ -62,15 +62,15 @@ cd app
 make install
 ```
 
-**3. That's it.** 
+**3. That's it.**
 
-Open [http://localhost:8080](http://localhost:8080) url in your browser. 
+Open [http://localhost:8080](http://localhost:8080) url in your browser.
 
 _If you see the 502 error page, just wait a bit when ```yarn install && yarn dev``` process will be finished (Check the status with the command ```docker-compose logs client```)_
 
 
 ## Basic usage
-Your base url is ```http://localhost:8080```. All requests to Laravel API must be sent using to the url starting with `/api` prefix. Nginx server will proxy all requests with ```/api``` prefix to the node static server which serves the Nuxt. 
+Your base url is ```http://localhost:8080```. All requests to Laravel API must be sent using to the url starting with `/api` prefix. Nginx server will proxy all requests with ```/api``` prefix to the node static server which serves the Nuxt.
 
 There is also available [http://localhost:8081](http://localhost:8081) url which is handled by Laravel and should be used for testing purposes only.
 
@@ -109,11 +109,11 @@ API_URL_BROWSER=http://localhost:8080
 `API_URL` is the url where Nuxt sends requests during SSR process and is equal to the Nginx url inside the docker network. Take a look at the [image above](#basic-usage).
 `API_URL_BROWSER` is the base application url for browsers.
 
-To make them work, ensure you have the import dotenv statement at the very top in the nuxt.config.js file 
+To make them work, ensure you have the import dotenv statement at the very top in the nuxt.config.js file
 ```
 require('dotenv').config()
 
-export default {    
+export default {
   // Nuxt configuration
 }
 ```
@@ -121,9 +121,9 @@ export default {
 ## Requests
 Example of API request:
 ```
-this.$axios.post('/api/register', { 
-    email: this.email, 
-    password: this.password 
+this.$axios.post('/api/register', {
+    email: this.email,
+    password: this.password
 });
 ```
 
@@ -153,7 +153,7 @@ docker-compose restart client
 ```
 
 ## Laravel
-Laravel API is available at the [http://localhost:8080/api](http://localhost:8080/api) url.   
+Laravel API is available at the [http://localhost:8080/api](http://localhost:8080/api) url.
 
 There is also available [http://localhost:8081](http://localhost:8081) url which is handled by Laravel and should be used for testing purposes only.
 
@@ -179,7 +179,7 @@ Nginx will proxy all requests with the `/storage` path prefix to the Laravel sto
 Just make sure you run the `artisan storage:link` command (Runs automatically during the `make install` process).
 
 ## Makefile
-There are a lot of useful make commands you can use. 
+There are a lot of useful make commands you can use.
 All of them you should run from the project directory where `Makefile` is located.
 
 Examples:
@@ -228,7 +228,7 @@ docker-compose exec --user "$(id -u):$(id -g)" php php artisan make:model Post
 The `artisan` alias allows to do the same like this:
 ```
 artisan make:model Post
-``` 
+```
 
 ## Database
 If you want to connect to PostgreSQL database from an external tool, for example _Sequel Pro_ or _Navicat_, use the following parameters
@@ -237,14 +237,14 @@ HOST: localhost
 PORT: 54321
 DB: app
 USER: app
-PASSWORD: app   
+PASSWORD: app
 ```
 
 Also, you can connect to DB with CLI using docker container:
 ```
 // Connect to container bash cli
 docker-compose exec postgres bash
-    // Then connect to DB cli 
+    // Then connect to DB cli
     psql -U ${POSTGRES_USER} -d ${POSTGRES_DB}
 ```
 
@@ -257,7 +257,7 @@ To import file into the database, put your file to docker/postgres/dumps folder,
 ```
 // Connect to container bash cli
 docker-compose exec postgres bash
-    // Then connect to DB cli 
+    // Then connect to DB cli
     psql -U ${POSTGRES_USER} -d ${POSTGRES_DB} < /tmp/dump.sql
 ```
 
@@ -304,7 +304,7 @@ During the nuxt app creation select the following options:
     - [x] None (Recommended)
 - Choose rendering mode
     - [x] Universal (SSR)
-- Choose Nuxt.js modules 
+- Choose Nuxt.js modules
     - [x] Axios
     - [x] DotEnv
 - At other steps you can choose an option what you want
@@ -316,3 +316,7 @@ During the nuxt app creation select the following options:
 - [ ] laravel-echo-server container for websocket integration
 - [ ] selenium container and instructions about testing
 - [ ] add a project starter readme.md file
+
+
+# Document
+* https://alexclark.co.nz/blog/using-apollo-and-graphql-with-nuxt-js
